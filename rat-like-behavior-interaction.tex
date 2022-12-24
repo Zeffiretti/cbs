@@ -122,7 +122,7 @@ In addition, we considered the problem of robot collision avoidance, as shown in
 \subsection{Hypothesis Test}
 First, we observed the interaction process and calculated the interaction information entropy between rats ($I_{rat}=1.207$). Then, we gave a series of values of $p_{-\infty}, p_{+\infty}$ and $k$, and calculated the value of $I_{robot}$ in the interaciton time $T_{interaciton}$. $T_{interaciton}$ is the shortest time to make the interaction process converge. When the behavior probability distribution of the robot tends to be stable, we believe that the interaction process converges. Our results are shown in Table \ref{table:INTERACTION INFORMATION ENTROPY OF ROBOTS}.
 \begin{table}[b]
-    \caption{Interaction Information Entropy of Robots}    
+    \caption{Interaction Information Entropy of Robots}
     \centering
     \begin{tabular}{ccccc}
             \hline
@@ -145,7 +145,7 @@ After data analysis, we found that the independent variables have a significant 
 where the coefficients $a_i, i=0,1,2,3$ are calculated as follows ($n$ is the number of samples).
 \begin{equation*}
     \left[\begin{array}{c}
-        a_0 \\ 
+        a_0 \\
         a_1 \\
         a_2 \\
         a_3 \\
@@ -156,7 +156,7 @@ where the coefficients $a_i, i=0,1,2,3$ are calculated as follows ($n$ is the nu
         \sum k & \sum p_{-\infty} k & \sum p_{+\infty} k  & \sum k^2 \\
     \end{array}\right]^{-1}
     \left[\begin{array}{c}
-        \sum I_{robot} \\ 
+        \sum I_{robot} \\
         \sum p_{-\infty} I_{robot} \\
         \sum p_{+\infty} I_{robot} \\
         \sum kI_{robot} \\
@@ -175,14 +175,14 @@ Furthermore, we obtained a set of control variables through parameter optimizati
 
 We calculated the interaction information entropy between robots (10 times) by the optimal solution of control variables, and the results are shown in Table \ref{table:INTERACTION INFORMATION ENTROPY OF ROBOTS AND RATS}. The t-test shows that there is no significant difference between the interaction information entropy of two robots and two rats; that is, our hypothesis has been verified.
 \begin{table}[b]
-    \caption{Interaction Information Entropy of Robots and Rats}    
+    \caption{Interaction Information Entropy of Robots and Rats}
     \centering
     \begin{tabular}{ccc}
             \hline
             $I_{robot}$ & ${I}_{rat}$ & t-test \\
             \hline
             1.210 &\multirow{9}{*}{1.207} & \multirow{9}{*}{$\begin{array}{l}
-                H_0:\bar{I}_{robot}=I_{rat}; \\ H_1:\bar{I}_{robot}\neq I_{rat}; \\ t=1.583<t_{0.025,9}=2.262 
+                H_0:\bar{I}_{robot}=I_{rat}; \\ H_1:\bar{I}_{robot}\neq I_{rat}; \\ t=1.583<t_{0.025,9}=2.262
             \end{array}$} \\
             1.108 & & \\
             1.208 & & \\
