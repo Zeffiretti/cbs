@@ -1,8 +1,32 @@
 \section{Two Behavior Patterns of Interaction}
 \subsection{Individual Pattern}
-The open-field test is used to study the spontaneous activities of animals in a new environment. It allows experimental animals to move freely in a certain space with few restrictions, and has become an important method to study animal movements and behaviors \cite{PRUT20033, EILAM200353}. Scientists usually divide the movements of rats into movements such as going straight, turning, standing up, and staying in one place. Correspondingly, the behaviors of rats are divided into behaviors such as exploring, grooming, and resting to reflect the different activity characteristics of rats\cite{the_rat_study,whishow_bejavior,MARSHALL2021420,dunn_profiling}. In this paper, we observed the activities of individual rats (Rattus norvegicus) in a $1{\rm m}\times 1{\rm m}\times 1{\rm m}$ open field, and marked the key movement joints of rats. Through the records of 10 min a day, we obtained a dataset of the movements of three rats over five days. The rats involved in this study came from the same litter and were seven weeks old. The dataset (150 min) contains 3537 rat movements.
+The open-field test is used to study the spontaneous activities of animals in a
+new environment. It allows experimental animals to move freely in a certain
+space with few restrictions, and has become an important method to study animal
+movements and behaviors \cite{PRUT20033, EILAM200353}. Scientists usually divide
+the movements of rats into movements such as going straight, turning, standing
+up, and staying in one place. Correspondingly, the behaviors of rats are divided
+into behaviors such as exploring, grooming, and resting to reflect the different
+activity characteristics of rats\cite{the_rat_study,whishow_bejavior,
+MARSHALL2021420,dunn_profiling}. In this paper, we observed the activities of
+individual rats (Rattus norvegicus) in a $1{\rm m}\times 1{\rm m}\times 1{\rm m}
+$ open field, and marked the key movement joints of rats. Through the records of
+10 min a day, we obtained a dataset of the movements of three rats over five
+days. The rats involved in this study came from the same litter and were seven
+weeks old. The dataset (150 min) contains 3537 rat movements.
 
-Through the observation of rat data, we found that there were some specific combinations in the movement time series of rats. The frequency of these combinations is relatively high, which can reflect the activity characteristics of rats. Therefore, we used a softmax classifier to map the combination of movements to the behavior, and counted the probability distribution of the combinations and behaviors. Table \ref{table:movement and behavior of rats} 1 shows the movement and behavior of the rats we observed. Table \ref{table:relevancy between each movement combination and behavior} shows the relevancy between each movement combination and behavior (the numbers in brackets represent the probability). We built the individual pattern of rats on the basis of the behavior law shown in Table \ref{table:relevancy between each movement combination and behavior}.
+Through the observation of rat data, we found that there were some specific
+combinations in the movement time series of rats. The frequency of these
+combinations is relatively high, which can reflect the activity characteristics
+of rats. Therefore, we used a softmax classifier to map the combination of
+movements to the behavior, and counted the probability distribution of the
+combinations and behaviors. Table \ref{table:movement and behavior of rats} 1
+shows the movement and behavior of the rats we observed. Table \ref{table:
+relevancy between each movement combination and behavior} shows the relevancy
+between each movement combination and behavior (the numbers in brackets
+represent the probability). We built the individual pattern of rats on the basis
+of the behavior law shown in Table \ref{table:relevancy between each movement
+combination and behavior}.
 \begin{table}[b]
     \caption{Movement and Behavior of Rats}
     \centering
@@ -38,16 +62,46 @@ Through the observation of rat data, we found that there were some specific comb
 \end{table}
 
 \subsection{Interaction Pattern}
-The interaction between rats will appear in various states, such as tracking, imitating and contacting. At present, there are still great difficulties in contact simulation of the robot (insufficient freedom of forelimbs, difficult to accurately control contact parts and contact forces, etc.). Hence, we avoid contacting when controlling the robot interaction. When counting the rat behavior data, the probability of rat contacting is transformed into tracking and imitating in proportion.
+The interaction between rats will appear in various states, such as tracking,
+imitating and contacting. At present, there are still great difficulties in
+contact simulation of the robot (insufficient freedom of forelimbs, difficult to
+accurately control contact parts and contact forces, etc.). Hence, we avoid
+contacting when controlling the robot interaction. When counting the rat
+behavior data, the probability of rat contacting is transformed into tracking
+and imitating in proportion.
 
-To effectively learn the interactive behavior model between rats, we defined A as the rat that actively generates the interaction intention and B as the rat that passively responds to the interaction. Among them, the stimulator (${\rm R_A}$) executes the individual pattern, and the receiver (${\rm R_B}$) switches between the individual pattern and the interaction pattern. In the interaction pattern, the behavior of ${\rm R_B}$ is determined by ${\rm R_A}$. Which pattern ${\rm R_B}$ executes depends on the probability of interaction ($\rm P_{interaction}$) between two rats, as show in Figure \ref{interaction-process}. $a_{i+1}$, $b_i$ and $b_{i+1}$ are the behavior of ${\rm R_A}$ at $t_{i+1}$, ${\rm R_B}$ at $t_i$ and ${\rm R_B}$ at $t_{i+1}$ respectively.
+To effectively learn the interactive behavior model between rats, we defined A
+as the rat that actively generates the interaction intention and B as the rat
+that passively responds to the interaction. Among them, the stimulator (${\rm
+R_A}$) executes the individual pattern, and the receiver (${\rm R_B}$) switches
+between the individual pattern and the interaction pattern. In the interaction
+pattern, the behavior of ${\rm R_B}$ is determined by ${\rm R_A}$. Which pattern
+${\rm R_B}$ executes depends on the probability of interaction ($\rm
+P_{interaction}$) between two rats, as show in Figure \ref{interaction-process}.
+$a_{i+1}$, $b_i$ and $b_{i+1}$ are the behavior of ${\rm R_A}$ at $t_{i+1}$,
+${\rm R_B}$ at $t_i$ and ${\rm R_B}$ at $t_{i+1}$ respectively.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{interaction-process.jpg}
     \caption{The interaction process between $\rm R_A$ and $\rm R_B$.}
     \label{interaction-process}
 \end{figure}
-Furthermore, we verified the rationality of the proposed strategy. We observed the interaction process between the rats. We divided three rats, 1, 2 and 3, into three groups and placed them in a $1{\rm m}\times 1{\rm m}\times 1{\rm m}$ open field in pairs (rats 1 and 2; rats 1 and 3; rats 2 ant 3). Each group recorded 20-min rat behavior data. During the recording process, the active rat is always marked as A and the passive rat is marked as B. Then, we obtained approximately 1000 behavior data of rats A and B, respectively. We counted the behavior probability distribution of rats A and B in the process of interaction, and the joint hypotheses test (F-test) was used to verify whether the behavior probability distribution of rats in the interaction was consistent with that in the individual pattern. Our results are shown in Table \ref{table:Behavior Probability Distribution of Rats}. It can be seen that there is no significant difference between the behavior distribution probability of $\rm R_A$ and that of individuals, that is, $\rm R_A$ always executes the individual pattern; the behavior distribution probability of RB is significantly different from that of individuals, so the behavior of $\rm R_B$ is affected by $\rm R_A$.
+Furthermore, we verified the rationality of the proposed strategy. We observed
+the interaction process between the rats. We divided three rats, 1, 2 and 3,
+into three groups and placed them in a $1{\rm m}\times 1{\rm m}\times 1{\rm m}$
+open field in pairs (rats 1 and 2; rats 1 and 3; rats 2 ant 3). Each group
+recorded 20-min rat behavior data. During the recording process, the active rat
+is always marked as A and the passive rat is marked as B. Then, we obtained
+approximately 1000 behavior data of rats A and B, respectively. We counted the
+behavior probability distribution of rats A and B in the process of interaction,
+and the joint hypotheses test (F-test) was used to verify whether the behavior
+probability distribution of rats in the interaction was consistent with that in
+the individual pattern. Our results are shown in Table \ref{table:Behavior
+Probability Distribution of Rats}. It can be seen that there is no significant
+difference between the behavior distribution probability of $\rm R_A$ and that
+of individuals, that is, $\rm R_A$ always executes the individual pattern; the
+behavior distribution probability of RB is significantly different from that of
+individuals, so the behavior of $\rm R_B$ is affected by $\rm R_A$.
 \begin{table}[b]
     \caption{Behavior Probability Distribution of Rats}
     \centering
