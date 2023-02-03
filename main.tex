@@ -19,6 +19,7 @@
 citestyle=numeric-comp,
 sorting=none]{biblatex}
 \addbibresource{reference.bib}
+\synctex=1
 
 %%%%%% Title %%%%%%
 % Full titles can be a maximum of 200 characters, including spaces.
@@ -65,28 +66,39 @@ Technology), Ministry of Education, Beijing 100081, China}
 
 %%%%%% Abstract %%%%%%
 \begin{abstract}
-In the existing robot-rat interaction, robots usually exert influence as stimuli
-to observe the response of target rats. However, the above single-stimulation
-model from robot to rat lacks a two-way communication. Therefore, we proposed a
-method to learn the rat-like behavioral interaction. First, we constructed two
-behavior patterns in the interaction process between the two rats: the
-individual pattern and the interaction pattern. We divided the roles of the two
-rats into active stimulator and passive receiver. The stimulator executes the
-individual pattern, and the receiver switches between the two patterns. Which
-pattern the receiver executes depends on the probability of interaction.
-Secondly, we proposed a hypothesis concerning the behavioral interaction between
-two rats and controlled the interaction process between two robots. Information
-entropy was used to measure the similarity between two robots and two rats. The
-results proved that the probability of interaction between rats depends on the
-distance of centroid and average relative velocity, and we obtained the optimal
-solution to express the relationship between them. In the future, the
-improvement of robots' interaction ability with rats will highly benefit from
-this study.
+% In the existing robot-rat interaction, robots usually exert influence as stimuli
+% to observe the response of target rats. However, the above single-stimulation
+% model from robot to rat lacks a two-way communication. Therefore, we proposed a
+% method to learn the rat-like behavioral interaction. First, we constructed two
+% behavior patterns in the interaction process between the two rats: the
+% individual pattern and the interaction pattern. We divided the roles of the two
+% rats into active stimulator and passive receiver. The stimulator executes the
+% individual pattern, and the receiver switches between the two patterns. Which
+% pattern the receiver executes depends on the probability of interaction.
+% Secondly, we proposed a hypothesis concerning the behavioral interaction between
+% two rats and controlled the interaction process between two robots. Information
+% entropy was used to measure the similarity between two robots and two rats. The
+% results proved that the probability of interaction between rats depends on the
+% distance of centroid and average relative velocity, and we obtained the optimal
+% solution to express the relationship between them. In the future, the
+% improvement of robots' interaction ability with rats will highly benefit from
+% this study.
 
 In this paper, we propose a finite state decision strategy using reinforcement
 learning for a robotic rat to interact with animals in a more natural manner. In
-previous study, we proved that the roles of the two rats in behavioral
-interactions can be divided into active stimulator and passive
+previous study, we proved that the finite states of the interaction of rats can
+be divided into eight movements and six types of behavior. To find the optimal
+strategy of a robotic rat to interact with animals among these states, we use
+Monte-Carlo method to optimize the finite state decision process. First, we
+evaluate the similarity of the behavior between the robotic rat and the animals
+through the objective function of the motion description variables in robot
+configuration space. Second, we make different states sampling to generate robot
+motions in a simulation environment which includes two robotic rats. To ensure
+that the behavior similarity is no less than 0.6 in any situations,
+Broyden-Fletcher-Glodfrab-Shanno (BFGS) algorithm is adopted to find the optimal
+finite state decision strategy.
+The results show that \textcolor{red}{...}
+% optimize the sampling using Broyden-Fletcher-Glodfrab-Shanno (BFGS) algorithm.
 \end{abstract}
 
 %%%%%% Main Text %%%%%%
