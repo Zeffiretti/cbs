@@ -18,10 +18,6 @@ specially designed biomimetic autonomous robot into cockroaches to study the
 collective decision-making behavior of cockroaches in shelter selection
 \cite{doi:10.1126science.1144259}.
 
-However, the mechanism
-of state decision that ensures the two rats can interact with each other still
-remains uncertain.
-
 The social activities of rats have attracted the interest of many researchers,
 and these studies have achieved remarkable results
 \cite{fleliz_bidirectional_modulation,weiss_shall_two_walk}. Because of the
@@ -30,22 +26,54 @@ have been designed for the study of rats \cite{Lucas2018DesignOA,Shi_bb_2013,
 Shi_bb_2015,shi-gao-tro-2022}. Ortiz \textit{et al.} designed a robotic rat
 (e-puck) with a simple behavior pattern to explore whether the robot can
 interact well with actual rats and trigger their social behaviors
-\cite{Rusalky-sit}. Heath et al. developed a biomimetic robotic rat (Pirat),
+\cite{Rusalky-sit}. Heath \textit{et al.} developed a biomimetic robotic rat (Pirat),
 which is similar in size to the real rat. The influence of the robot on rat
 behaviors was tested by controlling different behaviors of the robot (frequent
 approach and avoidance) \cite{pirat}. Sullivan \textit{et al.} designed a robot
 imitating the behavior of rat pups, and planned the input/output cognitive
 architecture for the robot through a genetic algorithm to deeply understand the
-behavior of Norwegian rat pups \cite{sullivan-arl-2015}. However, these robots
-have fewer degrees of freedom (DOFs) and lack flexibility in local motion, so it
-is difficult to simulate the complex and diverse behavior patterns of rats. In
-addition, the current research on robot-rat interaction usually adopts the
-method of directly controlling the movement and behavior of the robot. The robot
-acts as a stimulus to exert influence to observe the response of the target rat.
-There are few studies on the behavioral interaction between rats. We believe
-that learning the behavioral interaction of rats is indeed a means to promote
-the effect of robot-rat interaction.
+behavior of Norwegian rat pups \cite{sullivan-arl-2015}. Our previous study
+constructed two behavior patterns in the interaction process between the two
+rats: the individual pattern and the interaction pattern. We divided the roles
+of the two rats into active stimulator and passive receiver. It proved that the
+behavioral interaction is formed from 14 basic states including eight
+movements and six behaviors (Table \ref{table:movement and behavior of rats}).
+However, the mechanism of combining these states to generate interaction
+behaviors continuously that ensures the two rats can interact with each other
+still remains uncertain.
+% have fewer degrees of freedom (DOFs) and lack flexibility in local motion, so it
+% is difficult to simulate the complex and diverse behavior patterns of rats. In
+% addition, the current research on robot-rat interaction usually adopts the
+% method of directly controlling the movement and behavior of the robot. The robot
+% acts as a stimulus to exert influence to observe the response of the target rat.
+% There are few studies on the behavioral interaction between rats. We believe
+% that learning the behavioral interaction of rats is indeed a means to promote
+% the effect of robot-rat interaction.
+\begin{table}[b]
+    \caption{Movement and Behavior of Rats}
+    \centering
+    \begin{tabular}{cccc}
+            \hline
+            Movement & Symbol & Behavior & Symbol \\
+            \hline
+            Head pitching & $M_1$ & Sniffing & $B_1$ \\
+            Head yawing & $M_2$ & Exploring & $B_2$ \\
+            Body pitching & $M_3$ & Walking & $B_3$ \\
+            Body yawing & $M_4$ & Trotting & $B_4$ \\
+            Going Straight & $M_5$ & Resting & $B_5$ \\
+            Turning & $M_6$ & Grooming & $B_6$ \\
+            Staying & $M_7$ & & \\
+            Forelimb swing & $M_8$ & & \\
+            \hline
+            \end{tabular}
+    \label{table:movement and behavior of rats}
+\end{table}
 
+The problem can be solved with reinforcement learning, which concerned with how
+intelligent agents ought to take actions in an environment in order to maximize
+the notion of cumulative reward.
+
+% In this paper
 In this paper, we first constructed two behavior patterns of rat interaction:
 the individual pattern and the interaction pattern. In our previous study, we
 learned the individual behavior law of rats in the open field and applied it to
@@ -84,7 +112,7 @@ interaction. This is of great significance to future robot-rat interactions.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{process-of-robot-learn}
+    \includegraphics[width=0.6\textwidth]{process-of-robot-learn}
     \caption{The process of robot learning rat-like behavioral interaction.}
     \label{process-of-robot-learn}
 \end{figure}
