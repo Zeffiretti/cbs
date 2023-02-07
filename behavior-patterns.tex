@@ -1,6 +1,90 @@
-\section{Two Behavior Patterns of Interaction}
-\subsection{Individual Pattern}
-The open-field test is used to study the spontaneous activities of animals in a
+\section{Rat Behavior Model}
+\subsection{Preliminaries}
+We consider behavioral interaction as a Markov Decision Process (MDP) which is
+defined as a 4-tuple $M=\{\mathcal{S},\mathcal{A},\mathcal{P}_a,\mathcal{R}_a\}$,
+where $\mathcal{S}$ is a set of states called the state space, $\mathcal{A}$ is
+a set of possible actions the robot can take, $\mathcal{P}_a(s,s{'})$ is the
+probability that action $a$ in state $s$ at time step $t$ will lead to state
+$s{'}$ at time step $t+1$, $\mathcal{R}_a(s,s{'})$ is the immediate reward (or
+expected immediate reward) received after transitioning from state $s$ to state
+$s{'}'$, due to action $a$ \cite{MDP}. As has been proved in our previous study
+\cite{gao-eng-2022, gao-proc}, the state space includes 8 motion primitives and
+6 behaviors (Table \ref{table:movement and behavior of rats}). They can be
+described as functions of a 3-tuple $\{T,f,\phi\}_s$, where $T$ is the time
+duration, $f$ is the motion or behavior frequency and $\phi$ is the amplitude of
+the motion or behavior of the state $s$. Accordingly, the action space contains
+the transition between each state in the state space. Our aim is to find the
+optimal policy at time $t$ to reach the point at where the accumulated
+interaction information entropy is less than at elsewhere.
+\begin{equation}\label{eq:objective-function}
+\begin{aligned}
+  &\pi^*(s_1,s_2,a)=\arg\min_{a\in\mathcal{A}}\int I^t(s_1,s_2,a) dt \\
+  &\text{s.t.}~I^t(s_1,s_2,a)=\sum_{s_1^{t+1},s_2^t,s_2^{t+1}}p(s_1^{t+1},s_2^t,
+  s_2^{t+1})\log_2(\frac{p(s_2^{t+1}|s_1^{t+1}),s_2^t}{s_2^{t+1}|s_2^i})
+\end{aligned}
+\end{equation}
+where $\pi^*$ is the optimal policy given states of the two rats $s_1,~s_2$ and
+action $s$ in the format of probability dense function, $I$ is the interaction
+information entropy between rats. The details of the interaction information
+entropy can be found in \cite{gao-eng-2022, gao-proc}.
+
+\subsection{Behavior Similarity Evaluation}
+In Markov Decision Process, the immediate reward should be given as quickly as
+possible to the agent so that it can take actions at once to accommodate itself
+to the environment. But the value of the interaction information entropy would
+not change until the rats enters into the new state after a duration of $T$.
+That means an immediate evaluation method to measure the actions in interaction
+is required to speed up the decision making. To this end, we use the
+well-validated method of representational similarity analysis (RSA) \cite{rsa}
+at short timescale to calculate the reward.
+
+Given that both the states and the actions are sequences of animal joints
+movements, they can be described as
+\begin{equation}\label{eq:motion-description}
+\begin{aligned}
+  s &=& F_s(\Theta) &= (\Theta_1, \Theta_2, \cdots, \Theta_N)\\
+  a &=& F_a(\Theta) &= (\Theta_1, \Theta_2, \cdots, \Theta_n)\\
+    &&\Theta&=[\theta_1,\theta_2,\cdots,\theta_7,\nu,\omega]^T
+\end{aligned}
+\end{equation}
+where $\theta_i,~(i=1,2,\cdots,7)$ represents the $i$th joint displacements of the
+animal, and $\nu,\omega$ represents the linear and the angular velocity of the
+animal with respect to the world frame. $\Theta$ is the motion description
+variables in the configuration space of both the robot and the animals.
+
+From Equation (\ref{eq:objective-function}) and Equation (\ref{eq:motion-description}),
+we have the expected entropy as
+\begin{equation}\label{eq:proof}
+  \begin{aligned}
+    E{I(s,a)}&=EF(s^{t},s^{t+1},a^t)\\
+          &=EF(F_s^{t}, F_s^{t+1}, F_a^{t})\\
+          &=EF(F_s^{t}, F_s^{t}p(s^{t+1}|s^t,a^t), F_a^{t})\\
+          &=F(EF_s^{t}, EF_s^{t}p(s^{t+1}|s^t,a^t), EF_a^{t})\\
+          &=F(F_s^{t}, F_s^{t}Ep(s^{t+1}|s^t,a^t), F_a^{t})\\
+          &=F(F_s^{t}, F_s^{t}\sum_{s\in\mathcal{S}}p(s|s^t,a^t), F_a^{t})\\
+          &=G(\Theta^t)
+  \end{aligned}
+\end{equation}
+
+From Equation (\ref{eq:proof}), it can be proved that the expected interaction
+information entropy is the function of motion description variables at time $t$,
+with no need of future knowledge. Therefore, it is reasonable to use $\Theta$ to
+calculate the current immediate reward. As multi-channel measures of motions are
+quantitatively related to each other and to computational theory and behavior by
+comparing representational dissimilarity matrices, RSA can be seamlessly applied
+in this context \cite{RSA-intro}.
+
+To apply RSA, we first calculate the Pearson correlation of the motions between
+the policy-generated data and real rats' motion data. Then we calculate the
+kinematic similarity matrix at the time step as $M$.
+
+% Since the rats' cognition and decisions
+% are affected by the relative positions and the partner's motions, the immediate
+% reward in the context of interaction is defined as a function of the motion
+% descriptions variables as,
+
+To obtain the probability function $p(s)$ in Equation (\ref{eq:objective-function}),
+the open-field test is used to study the spontaneous activities of animals in a
 new environment. It allows experimental animals to move freely in a certain
 space with few restrictions, and has become an important method to study animal
 movements and behaviors \cite{PRUT20033, EILAM200353}. Scientists usually divide
@@ -61,7 +145,7 @@ the basis of the behavior law shown in Table
     \label{table:relevancy between each movement combination and behavior}
 \end{table}
 
-\subsection{Interaction Pattern}
+\subsection{Individual Motion Generation}
 The interaction between rats will appear in various states, such as tracking,
 imitating and contacting. At present, there are still great difficulties in
 contact simulation of the robot (insufficient freedom of forelimbs, difficult to
@@ -120,3 +204,5 @@ individuals, so the behavior of $\rm R_B$ is affected by $\rm R_A$.
             \end{tabular}
     \label{table:Behavior Probability Distribution of Rats}
 \end{table}
+
+\subsection{Interaction Motion Generation}

@@ -1,4 +1,4 @@
-\section{Rat-Like Behavior Interaction}
+\section{Monto-Carlo Based Finite State Decision}
 \subsection{Robotic Rat Platform}
 The prototype of our recently developed robotic rat is shown in Figure
 \ref{figure:robot-system}. The robot is mainly composed of the head, forelimb,
@@ -10,7 +10,7 @@ correspond to the key movement joints of rats. The head pitching and yaw
 movements ($M_1, M_2$) are performed by $J_7$ and $J_6$ respectively; the body
 pitching movement $M_3$ is performed by $J_1$, $J_2$ and $J_5$; the body yaw
 movement ($M_4$) is performed by $J_3$ and $J_4$; the straight movement ($M_5$)
-is performed by the driving wheels ($J_{WL}$, $J_{WR}$); the turing movement
+is performed by the driving wheels ($J_{WL}$, $J_{WR}$); the turning movement
 ($M_6$) is performed by the yaw joints compound driving wheels ($J_3$, $J_4$,
 $J_6$, $J_{WL}$, $J_{WR}$); and the forelimb swing movement ($M_8$) is performed
 by $J_F$.
@@ -25,8 +25,7 @@ by $J_F$.
         \includegraphics[height=1.3in]{coord.png}
         \caption{\label{figure:motion-coord}}
     \end{subfigure}
-    \caption{(\subref{figure:roboticrat}) Robotic rat. (\subref{figure:
-    motion-coord}) Motion coordinate system of the robotic rat.}
+    \caption{(\subref{figure:roboticrat}) Robotic rat. (\subref{figure:motion-coord}) Motion coordinate system of the robotic rat.}
     \label{figure:robot-system}
 \end{figure}
 
@@ -44,7 +43,7 @@ two-hidden-layer BP neural network is used to learn and generate the trajectory
 of each joint of the robot, as shown in Figure. \ref{figure:Joint Trajectory
 learning by a two hidden-layer BP neural network}. The tanh activation function
 is used to accelerate the convergence of the network
-\cite{inohira-generalization}. $\theta_1-theta_7$ represent the angular
+\cite{inohira-generalization}. $\theta_1-\theta_7$ represent the angular
 displacement of robot spine joints, $\theta_f$ represents the angular
 displacement of robot forelimb joint, and $\omega_l,~\omega_r$ represent the
 angular velocity of robot driving wheels.
@@ -78,7 +77,50 @@ angular velocity of robot driving wheels.
     network}
 \end{figure}
 
-\subsection{Interaction Hypothesis}
+\subsection{Robotic Rat Platform}
+The prototype of our recently developed robotic rat is shown in Figure
+\ref{figure:robot-system}. The robot is mainly composed of the head, forelimb,
+waist and hip. The head and hip joints are driven by servo motors, the waist
+joints and wheels are driven by DC motors, and the forelimb is driven by a micro
+deceleration stepper motor. Its shape and size are similar to those of actual
+rats, with a total mass of approximately 400 g. The spinal joints of the robot
+correspond to the key movement joints of rats. The head pitching and yaw
+movements ($M_1, M_2$) are performed by $J_7$ and $J_6$ respectively; the body
+pitching movement $M_3$ is performed by $J_1$, $J_2$ and $J_5$; the body yaw
+movement ($M_4$) is performed by $J_3$ and $J_4$; the straight movement ($M_5$)
+is performed by the driving wheels ($J_{WL}$, $J_{WR}$); the turing movement
+($M_6$) is performed by the yaw joints compound driving wheels ($J_3$, $J_4$,
+$J_6$, $J_{WL}$, $J_{WR}$); and the forelimb swing movement ($M_8$) is performed
+by $J_F$.
+
+To make the robot achieve the above behaviors, we extracted the characteristic
+parameters for each movement combination, as shown in Table \ref{table:Movement
+Parameters}. These parameters determine the amplitude, average speed, frequency
+and duration of rat movements. In our previous work, we proved that the robot
+can complete the movement of rats with a high biomimicry degree, and the
+trajectory of each joint of the robot can be expressed by the above
+characteristic parameters \cite{shi-gao-tro-2021}. Here, to adapt to the
+diversity of rat movement parameters, we first used cluster analysis to extract
+the dominant values of these characteristic parameters
+\cite{fraley_how_many_clusters,kaufman_finding_groups}. Furthermore, a
+two-hidden-layer BP neural network is used to learn and generate the trajectory
+of each joint of the robot, as shown in Figure. \ref{figure:Joint Trajectory
+learning by a two hidden-layer BP neural network}. The tanh activation function
+is used to accelerate the convergence of the network
+\cite{inohira-generalization}. $\theta_1-\theta_7$ represent the angular
+displacement of robot spine joints, $\theta_f$ represents the angular
+displacement of robot forelimb joint, and $\omega_l,~\omega_r$ represent the
+angular velocity of robot driving wheels.
+
+\subsection{BFGS Algorithm for Strategy Optimization}
+In numerical optimization, the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm
+is an iterative method for solving unconstrained nonlinear optimization
+problems \cite{Practical-Methods-of-Optimization}. Like the related Davidon–
+Fletcher–Powell method, BFGS determines
+the descent direction by preconditioning the gradient with curvature
+information. It does so by gradually improving an approximation to the Hessian
+matrix of the loss function, obtained only from gradient evaluations (or
+approximate gradient evaluations) via a generalized secant method.[2]
 Based on our robotic rat platform, we hope to learn the rat-like behavioral
 interaction by controlling the interaction process between two robots. Therefore,
 we put forward the following hypothesis: The interaction probability
@@ -223,8 +265,8 @@ interaction process converges. Our results are shown in Table \ref{table:INTERAC
 After data analysis, we found that the independent variables have a significant
 impact on the dependent variable with a close linear correlation. Therefore, we
 used a multiple linear regression model to fit the relationship between
-independent variables and dependent variables, as shown in Equation (\ref{eq:
-multiple linear regression model}).
+independent variables and dependent variables, as shown in Equation
+(\ref{eq:multiple linear regression model}).
 \begin{equation}\label{eq:multiple linear regression model}
     \hat{I}_{robot}=a_0+a_1p_{-\infty}+a_2p_{+\infty}+a_3k
 \end{equation}
